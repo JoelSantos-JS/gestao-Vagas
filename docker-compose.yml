@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: gestao
+    image: postgres
+    ports:
+      - 5438:5432
+    environment:
+      - POSTGRES_DB=gestao
+      - POSTGRES_USER=joel
+      - POSTGRES_PASSWORD=joel
