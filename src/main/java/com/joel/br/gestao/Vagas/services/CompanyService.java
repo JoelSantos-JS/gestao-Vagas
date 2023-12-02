@@ -8,6 +8,7 @@ import com.joel.br.gestao.Vagas.mapper.CompanyMapper;
 import com.joel.br.gestao.Vagas.mapper.JobsMapper;
 import com.joel.br.gestao.Vagas.repository.CompanyRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +20,13 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private  final CompanyMapper mapper;
+    private final PasswordEncoder passwordEncoder;
     private final JobsMapper jobsMapper;
 
     @Transactional
     public CompanyDTO save(CompanyDTO company) {
         Company company1 = mapper.toEntity(company);
-
+        company1.setPassword(passwordEncoder.encode(company.getPassword()));
 
         if(company.getJobs() != null) {
             for (JobsDTO jobsDTO : company.getJobs()) {

@@ -6,6 +6,7 @@ import com.joel.br.gestao.Vagas.exceptions.UserAlreadyExists;
 import com.joel.br.gestao.Vagas.mapper.CandidateMapper;
 import com.joel.br.gestao.Vagas.repository.CandidateRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class CandidateService {
 
     private final CandidateRepository repository;
     private final CandidateMapper mapper;
-
+    private final PasswordEncoder passwordEncoder;
 
 
     public List<Candidate> candidates() {
@@ -30,6 +31,7 @@ public class CandidateService {
 
     public CandidateDTO save(CandidateDTO candidate ) {
         Candidate candidate1 = mapper.toDomain(candidate);
+        candidate1.setPassword(passwordEncoder.encode(candidate.password()));
             verifyUserAndEmail(candidate1);
 
             repository.save(candidate1);

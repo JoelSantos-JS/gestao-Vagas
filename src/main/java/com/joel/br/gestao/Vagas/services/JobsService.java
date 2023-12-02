@@ -36,6 +36,7 @@ public class JobsService {
 
     public JobsDTO save(JobsDTO jobsDTO) {
         Jobs jobs = mapper.toEntity(jobsDTO);
+
         Company company = companyRepository.findById(jobsDTO.getCompany().getId()).get();
 
         if(company !=null) {
